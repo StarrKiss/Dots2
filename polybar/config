@@ -76,8 +76,9 @@ foreground = ${color.fg}
 
 ;==========================================================
 
-font-0 = "Fantasque Sans Mono:pixelsize=12;3"
+font-0 = "Fantastic Sans Mono:pixelsize=12;3"
 font-1 = "Material Icons:pixelsize=14;3"
+font-2 = "Source Code Pro:pixelsize=12;3"
 
 ;==========================================================
 
@@ -91,7 +92,8 @@ scroll-down = i3wm-wsprev
 ;== Module Location ========================================================
 
 modules-left = arch seperator workspaces google github reddit youtube
-modules-right =   volume battery externalbattery network date powermenu
+modules-center = mpris
+modules-right =    volume battery externalbattery network date powermenu
  
 ;== Modules ========================================================
 
@@ -206,6 +208,23 @@ label-song-ellipsis = true
 
 ;==========================================================
 
+[module/wintitle]
+type = internal/xwindow
+format = <label>
+format-background = ${color.bg}
+format-foreground = ${color.fg}
+label = %title%
+label-maxlen = 40
+label-empty = Empty
+
+[module/mpris]
+type = custom/script
+exec = ~/polybar-scripts/player-mpris-simple.sh
+interval = 3
+click-left = playerctl previous
+click-right = playerctl next
+click-middle = playerctl play-pause
+
 [module/pkg]
 type = custom/script
 exec = updates.sh
@@ -215,7 +234,7 @@ tail = true
 
 [module/battery]
 type = internal/battery
-full-at = 99
+full-at = 84
 time-format = %H:%M
 battery = BAT0
 adapter = AC
@@ -227,8 +246,10 @@ format-discharging = <ramp-capacity> <label-discharging>
 format-discharging-background = ${color.bg}
 format-discharging-padding = 2
 label-discharging =  %percentage%%
-label-full =  %percentage%%
+label-full =  %percentage%% 
 format-full = <label-full>
+format-full-padding = 2
+
 format-full-background = ${color.bg}
 format-full-underline = ${color.fg}
 format-charging-underline = ${color.shade1}
@@ -259,7 +280,7 @@ animation-charging-framerate = 750
 [module/externalbattery]
 
 type = internal/battery
-full-at = 99
+full-at = 84
 time-format = %H:%M
 battery = BAT1
 adapter = AC
@@ -273,6 +294,7 @@ format-discharging-padding = 2
 label-discharging =  %percentage%%
 format-full = <label-full>
 label-full =  %percentage%%
+format-full-padding = 2
 format-full-background = ${color.bg}
 format-full-underline = ${color.fg}
 format-charging-underline = ${color.shade1}
@@ -312,7 +334,7 @@ label-muted-background = ${color.bg}
 label-muted-padding = 2
 format-volume-underline = ${color.shade1}
 format-muted-underline = ${color.fg}
-
+mapped = true
 
 ramp-volume-0 = 
 ramp-volume-1 = 
@@ -327,7 +349,8 @@ type = internal/network
 interface = wlp3s0
 format-background = ${color.bg}
 format-padding = 2
-label-connected =  %essid% at %downspeed:09:9:..% 
+label-connected =  %essid% at %{T3}%downspeed:09:9:..%
+;%downspeed:09:9:..%
 label-connected-padding = 2
 label-connected-foreground = #eefafafa
 label-connected-background = ${color.bg}
